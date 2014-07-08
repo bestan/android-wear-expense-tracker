@@ -1,7 +1,11 @@
 package lv.bestan.androidwearexpensetracker;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +52,15 @@ public class MainActivity extends ActionBarActivity {
                 openHistoryActivity();
             }
         });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Double expense = intent.getExtras().getDouble("expense");
+                expenses.add(new Expense(expense));
+                setTotalAmount();
+            }
+        }, new IntentFilter("add_expense_event"));
     }
 
     private void setTotalAmount() {
