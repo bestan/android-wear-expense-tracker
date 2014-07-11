@@ -7,12 +7,25 @@ import java.util.Calendar;
  */
 public class Expense {
 
+    private long id;
     private double amount;
     private Calendar time;
+
+    public Expense() {
+
+    }
 
     public Expense(double amount) {
         this.amount = amount;
         this.time = Calendar.getInstance();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Calendar getTime() {
@@ -21,6 +34,12 @@ public class Expense {
 
     public void setTime(Calendar time) {
         this.time = time;
+    }
+
+    public void setTimeInMillis(long millis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        this.time = calendar;
     }
 
     public double getAmount() {

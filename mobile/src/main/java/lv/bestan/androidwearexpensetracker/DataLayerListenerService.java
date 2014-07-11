@@ -18,6 +18,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
+import lv.bestan.androidwearexpensetracker.models.Expense;
+
 /**
  * Created by Stan on 07/07/2014.
  */
@@ -67,11 +70,13 @@ public class DataLayerListenerService extends WearableListenerService {
         try {
             byte[] data = messageEvent.getData();
             String text = new String(data, "UTF-8");
-            Double expense = Double.valueOf(text);
-            Log.d(TAG, "Expense: :" + expense);
+            Double amount = Double.valueOf(text);
+            Log.d(TAG, "Expense: :" + amount);
+
+            Expense expense = new Expense(amount);
+            ExpensesDataSource.getInstance(this).saveExpense(expense);
 
             Intent intent = new Intent("add_expense_event");
-            intent.putExtra("expense", expense);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         } catch (Exception e) {
             e.printStackTrace();

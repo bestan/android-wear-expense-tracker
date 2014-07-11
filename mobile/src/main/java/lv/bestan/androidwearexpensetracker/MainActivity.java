@@ -12,41 +12,42 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 
+import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
 import lv.bestan.androidwearexpensetracker.models.Expense;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    public static ArrayList<Expense> expenses;
+    public static List<Expense> expenses;
 
     private LinearLayout mListContainer;
     private TextView mTotalAmount;
-    private Button history;
-    private RelativeLayout container;
+    private Button mHistory;
+    private RelativeLayout mContainer;
+    private ImageView mAddExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.container = (RelativeLayout) findViewById(R.id.container);
-        this.history = (Button) findViewById(R.id.button_history);
+        mContainer = (RelativeLayout) findViewById(R.id.container);
+        mHistory = (Button) findViewById(R.id.button_history);
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
+        mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
 
-        expenses = new ArrayList<Expense>();
-        createTestExpenses();
-//        createTestUI();
-        setTotalAmount();
+        updateTotalAmount();
 
         getActionBar().setTitle("Overview");
 
-        history.setOnClickListener(new View.OnClickListener() {
+        mHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openHistoryActivity();
@@ -56,19 +57,26 @@ public class MainActivity extends ActionBarActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Double expense = intent.getExtras().getDouble("expense");
-                expenses.add(new Expense(expense));
-                setTotalAmount();
+                expenses = ExpensesDataSource.getInstance(MainActivity.this).getAllExpenses();
+                updateTotalAmount();
             }
         }, new IntentFilter("add_expense_event"));
     }
 
-    private void setTotalAmount() {
+    private void updateTotalAmount() {
         double total_amount = 0;
+        expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
         for (Expense expense : expenses) {
             total_amount += expense.getAmount();
         }
         mTotalAmount.setText("" + total_amount);
+    }
+
+    private void deleteAllExpenses() {
+        expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
+        for (Expense expense : expenses) {
+            ExpensesDataSource.getInstance(this).deleteExpense(expense);
+        }
     }
 
     private void createTestExpenses() {
@@ -76,6 +84,11 @@ public class MainActivity extends ActionBarActivity {
         expenses.add(new Expense(27.13));
         expenses.add(new Expense(8.44));
         expenses.add(new Expense(19));
+
+
+        for (Expense expense: expenses) {
+            ExpensesDataSource.getInstance(this).saveExpense(expense);
+        }
     }
 
     private void createTestUI() {
