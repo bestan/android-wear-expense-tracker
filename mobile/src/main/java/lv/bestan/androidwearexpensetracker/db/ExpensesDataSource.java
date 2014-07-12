@@ -74,7 +74,7 @@ public class ExpensesDataSource {
         List<Expense> comments = new ArrayList<Expense>();
 
         Cursor cursor = database.query(MySQLiteHelper.TABLE_EXPENSES,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, MySQLiteHelper.COLUMN_TIME + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
@@ -43,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
         mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
 
+        createTestExpenses();
         updateTotalAmount();
 
         getActionBar().setTitle("Overview");
@@ -80,10 +83,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createTestExpenses() {
+        expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
+        for (Expense expense : expenses) {
+            ExpensesDataSource.getInstance(this).deleteExpense(expense);
+        }
+
+        expenses = new ArrayList<Expense>();
         expenses.add(new Expense(13.55));
-        expenses.add(new Expense(27.13));
-        expenses.add(new Expense(8.44));
-        expenses.add(new Expense(19));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 2);
+        expenses.add(new Expense(27.13, calendar));
+
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, Calendar.JUNE);
+        expenses.add(new Expense(8.44, calendar));
+
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, Calendar.MAY);
+        expenses.add(new Expense(19, calendar));
 
 
         for (Expense expense: expenses) {

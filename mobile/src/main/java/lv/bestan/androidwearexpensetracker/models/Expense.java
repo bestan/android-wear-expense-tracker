@@ -20,6 +20,12 @@ public class Expense {
         this.time = Calendar.getInstance();
     }
 
+    public Expense(double amount, Calendar time) {
+        this.amount = amount;
+        this.time = time;
+    }
+
+
     public long getId() {
         return id;
     }
