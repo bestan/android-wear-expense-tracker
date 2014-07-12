@@ -4,5 +4,6 @@
     <string name="app_name">Expense Tracker</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <string name="title_activity_new_expense_wear">New expense</string>
 
 </resources>
