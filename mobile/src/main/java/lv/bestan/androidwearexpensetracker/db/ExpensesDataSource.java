@@ -2,9 +2,11 @@ package lv.bestan.androidwearexpensetracker.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class ExpensesDataSource {
         return instance;
     }
 
+    private Context context;
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private String[] allColumns = {
@@ -32,8 +35,10 @@ public class ExpensesDataSource {
             MySQLiteHelper.COLUMN_TIME
     };
 
+
     public ExpensesDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
+        this.context = context;
     }
 
     public void open() throws SQLException {
@@ -58,6 +63,10 @@ public class ExpensesDataSource {
         Expense updatedExpense = cursorToExpense(cursor);
         cursor.close();
         close();
+
+        Intent intent = new Intent("add_expense_event");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
         return updatedExpense;
     }
 
@@ -67,6 +76,9 @@ public class ExpensesDataSource {
         database.delete(MySQLiteHelper.TABLE_EXPENSES, MySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
         close();
+
+        Intent intent = new Intent("delete_expense_event");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     public List<Expense> getAllExpenses() {

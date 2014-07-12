@@ -52,6 +52,10 @@ public class Expense {
         return amount;
     }
 
+    public String getAmountTwoDecimalPlaces() {
+        return String.format("%.2f", amount);
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }

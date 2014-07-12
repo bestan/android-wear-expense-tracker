@@ -1,6 +1,11 @@
 package lv.bestan.androidwearexpensetracker;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.ExpandableListView;
@@ -14,6 +19,7 @@ import java.util.List;
 import lv.bestan.androidwearexpensetracker.adapters.HistoryAdapter;
 import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
 import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.androidwearexpensetracker.models.MonthlyExpenses;
 
 /**
  * Created by Stan on 05/07/2014.
@@ -24,6 +30,13 @@ public class HistoryActivity extends ActionBarActivity {
     private ExpandableListView mList;
     private HistoryAdapter mAdapter;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateList();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +45,27 @@ public class HistoryActivity extends ActionBarActivity {
 
         this.mList = (ExpandableListView) findViewById(R.id.list);
 
-        ArrayList<String> months = new ArrayList<String>();
+        updateList();
 
-        HashMap<String, List<Expense>> expensesMonthMap = new HashMap<String, List<Expense>>();
+        IntentFilter intentFilter = new IntentFilter("add_expense_event");
+        intentFilter.addAction("delete_expense_event");
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private void updateList() {
+        ArrayList<MonthlyExpenses> months = new ArrayList<MonthlyExpenses>();
+
+        HashMap<MonthlyExpenses, List<Expense>> expensesMonthMap = new HashMap<MonthlyExpenses, List<Expense>>();
         List<Expense> expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
 
         int currentMonth = 12;
+        MonthlyExpenses currentMonthlyExpenses = null;
         String currentMonthString = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
 
@@ -48,17 +76,22 @@ public class HistoryActivity extends ActionBarActivity {
             if (month < currentMonth) {
                 currentMonth = month;
                 currentMonthString = dateFormat.format(expense.getTime().getTime());
+                currentMonthlyExpenses = new MonthlyExpenses(currentMonthString);
 
-                months.add(currentMonthString);
-                expensesMonthMap.put(currentMonthString, new ArrayList<Expense>());
+                months.add(currentMonthlyExpenses);
+                expensesMonthMap.put(currentMonthlyExpenses, new ArrayList<Expense>());
             }
 
-            expensesMonthMap.get(currentMonthString).add(expense);
+            currentMonthlyExpenses.increaseTotalAmount(expense.getAmount());
+            expensesMonthMap.get(currentMonthlyExpenses).add(expense);
         }
 
         mAdapter = new HistoryAdapter(this, months, expensesMonthMap);
         mList.setAdapter(mAdapter);
         mList.expandGroup(0);
+
+        mAdapter.notifyDataSetInvalidated();
+        mList.invalidate();
     }
 
 }

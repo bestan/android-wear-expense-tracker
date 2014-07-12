@@ -10,21 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
 
 import lv.bestan.androidwearexpensetracker.R;
+import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
 import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.androidwearexpensetracker.models.MonthlyExpenses;
 
 public class HistoryAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> months;
-    private HashMap<String, List<Expense>> expensesMap;
+    private List<MonthlyExpenses> months;
+    private HashMap<MonthlyExpenses, List<Expense>> expensesMap;
 
-    public HistoryAdapter(Context context, List<String> months, HashMap<String, List<Expense>> expensesMap) {
+    public HistoryAdapter(Context context, List<MonthlyExpenses> months, HashMap<MonthlyExpenses, List<Expense>> expensesMap) {
         this.context = context;
         this.months = months;
         this.expensesMap = expensesMap;
@@ -41,7 +44,7 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         final Expense expense = (Expense) getChild(groupPosition, childPosition);
 
@@ -52,6 +55,14 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
         TextView textView = (TextView) convertView.findViewById(R.id.text);
         textView.setText(""+expense.getAmount());
+
+        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExpensesDataSource.getInstance(context).deleteExpense(expense);
+            }
+        });
 
         return convertView;
     }
@@ -79,7 +90,7 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        MonthlyExpenses monthlyExpenses = (MonthlyExpenses) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
@@ -87,7 +98,10 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.month);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+        lblListHeader.setText(monthlyExpenses.getMonth());
+
+        TextView total = (TextView) convertView.findViewById(R.id.total);
+        total.setText(String.format("%.2f", monthlyExpenses.getTotalAmount()));
 
         return convertView;
     }

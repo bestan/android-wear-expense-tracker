@@ -76,8 +76,6 @@ public class DataLayerListenerService extends WearableListenerService {
             Expense expense = new Expense(amount);
             ExpensesDataSource.getInstance(this).saveExpense(expense);
 
-            Intent intent = new Intent("add_expense_event");
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }

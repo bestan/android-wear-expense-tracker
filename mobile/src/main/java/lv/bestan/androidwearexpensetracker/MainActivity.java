@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import lv.bestan.androidwearexpensetracker.models.Expense;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static final String TAG = "MainActivity";
     public static List<Expense> expenses;
 
     private LinearLayout mListContainer;
@@ -35,6 +37,15 @@ public class MainActivity extends ActionBarActivity {
     private Button mHistory;
     private RelativeLayout mContainer;
     private ImageView mAddExpense;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive");
+            expenses = ExpensesDataSource.getInstance(MainActivity.this).getAllExpenses();
+            updateTotalAmount();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,25 +56,35 @@ public class MainActivity extends ActionBarActivity {
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
         mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
 
-        createTestExpenses();
         updateTotalAmount();
 
         getActionBar().setTitle("Overview");
 
         mHistory.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 openHistoryActivity();
             }
         });
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+        mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                expenses = ExpensesDataSource.getInstance(MainActivity.this).getAllExpenses();
-                updateTotalAmount();
+            public void onClick(View v) {
+                openNewExpenseActivity();
             }
-        }, new IntentFilter("add_expense_event"));
+        });
+
+        IntentFilter intentFilter = new IntentFilter("add_expense_event");
+        intentFilter.addAction("delete_expense_event");
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        Log.d(TAG, "OnDestroy");
     }
 
     private void updateTotalAmount() {
@@ -72,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
         for (Expense expense : expenses) {
             total_amount += expense.getAmount();
         }
-        mTotalAmount.setText("" + total_amount);
+        mTotalAmount.setText("" + String.format("%.2f", total_amount));
     }
 
     private void deleteAllExpenses() {
@@ -83,10 +104,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createTestExpenses() {
-        expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
-        for (Expense expense : expenses) {
-            ExpensesDataSource.getInstance(this).deleteExpense(expense);
-        }
+        deleteAllExpenses();
 
         expenses = new ArrayList<Expense>();
         expenses.add(new Expense(13.55));
@@ -147,7 +165,7 @@ public class MainActivity extends ActionBarActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_add_expense:
-                openAddExpenseActivity();
+                openNewExpenseActivity();
                 return true;
             case R.id.action_view_history:
                 openHistoryActivity();
@@ -157,12 +175,15 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void openAddExpenseActivity() {
+    private void openNewExpenseActivity() {
+        Intent intent = new Intent(MainActivity.this, NewExpenseActivity.class);
+        startActivity(intent);
     }
 
     private void openHistoryActivity() {
         Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
         startActivity(intent);
     }
+
 
 }

@@ -24,4 +24,8 @@ dependencies {
     wearApp project(':wear')
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.google.android.gms:play-services-wearable:+'
+
+    compile ("com.doomonafireball.betterpickers:library:1.5.2") {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 }
