@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:rectLayout="@layout/rect_activity_new_expense_wear"
-    app:roundLayout="@layout/round_activity_new_expense_wear"
-    tools:context="lv.bestan.androidwearexpensetracker.NewExpenseWearActivity"
-    tools:deviceIds="wear">
-</android.support.wearable.view.WatchViewStub>
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="What was \n your expense today?"
+        android:textSize="25sp"
+        />
+
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="5"
+        android:textSize="40sp"/>
+
+
+</RelativeLayout>

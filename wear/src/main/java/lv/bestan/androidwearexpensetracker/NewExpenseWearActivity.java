@@ -3,6 +3,7 @@ package lv.bestan.androidwearexpensetracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
@@ -24,20 +25,31 @@ public class NewExpenseWearActivity extends Activity {
     private static final String TAG = "NewExpenseWearActivity";
     private static final int SPEECH_REQUEST_CODE = 0;
 
-    private TextView mTextView;
+    private TextView mCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new LinearLayout(this));
+        setContentView(R.layout.activity_new_expense_wear);
+        mCounter = (TextView) findViewById(R.id.counter);
+
+        new CountDownTimer(3000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                mCounter.setText(""+millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+                // Start the activity, the intent will be populated with the speech text
+                startActivityForResult(intent, SPEECH_REQUEST_CODE);
+            }
+        }.start();
 
 
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
-        // Start the activity, the intent will be populated with the speech text
-        startActivityForResult(intent, SPEECH_REQUEST_CODE);
     }
 
     // This callback is invoked when the Speech Recognizer returns.
@@ -49,7 +61,6 @@ public class NewExpenseWearActivity extends Activity {
             List<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             String spokenText = results.get(0);
-            // Do something with spokenText
 
             String numberString = null;
             for (String word : spokenText.split(" ")) {
@@ -60,16 +71,6 @@ public class NewExpenseWearActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-
-//            Number number = 0;
-//            try {
-//                number = NumberFormat.getCurrencyInstance(Locale.UK).parse(numberString);
-//                mTextView.setText("" + number.doubleValue() + "(original: " + spokenText + ")");
-//                sendExpense((number.doubleValue()));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                mTextView.setText("exception");
-//            }
 
         }
         super.onActivityResult(requestCode, resultCode, data);
