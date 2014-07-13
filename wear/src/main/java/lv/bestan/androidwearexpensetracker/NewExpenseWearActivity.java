@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
+import android.support.wearable.activity.ConfirmationActivity;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -67,6 +68,7 @@ public class NewExpenseWearActivity extends Activity {
                 try {
                     Double amount = Double.valueOf(word);
                     sendExpense(amount);
+                    break;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -77,6 +79,7 @@ public class NewExpenseWearActivity extends Activity {
     }
 
     private void sendExpense(final double expense) {
+        finish();
         new Thread(new Runnable() {
 
             @Override
@@ -98,7 +101,10 @@ public class NewExpenseWearActivity extends Activity {
 
                         @Override
                         public void run() {
-                            finish();
+                            Intent intent = new Intent(NewExpenseWearActivity.this, ConfirmationActivity.class);
+                            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
+                            startActivity(intent);
+//                            finish();
                         }
                     });
                 } catch (Exception e) {

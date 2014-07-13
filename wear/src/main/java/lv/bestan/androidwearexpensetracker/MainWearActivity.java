@@ -50,7 +50,7 @@ public class MainWearActivity extends Activity {
         if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.androidwearexpensetracker")) {
             openNewExpenseWearActivity();
         }
-        
+
     }
 
     @Override
