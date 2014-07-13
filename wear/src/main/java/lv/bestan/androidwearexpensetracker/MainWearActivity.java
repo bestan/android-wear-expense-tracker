@@ -46,6 +46,11 @@ public class MainWearActivity extends Activity {
 
         IntentFilter intentFilter = new IntentFilter("expenses_update");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+
+        if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.androidwearexpensetracker")) {
+            openNewExpenseWearActivity();
+        }
+        
     }
 
     @Override
