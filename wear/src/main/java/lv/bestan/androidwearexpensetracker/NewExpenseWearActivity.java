@@ -25,17 +25,12 @@ public class NewExpenseWearActivity extends Activity {
     private static final int SPEECH_REQUEST_CODE = 0;
 
     private TextView mTextView;
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new LinearLayout(this));
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Wearable.API)
-                .build();
-        mGoogleApiClient.connect();
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -86,11 +81,11 @@ public class NewExpenseWearActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    Log.e(TAG, "Nodes: " + getNodes());
                     byte[] data = String.valueOf(expense).getBytes("UTF-8");
-                    for (String node : getNodes()) {
+                    WearUtils wearUtils = WearUtils.getInstance(NewExpenseWearActivity.this);
+                    for (String node : wearUtils.getNodes()) {
                         MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
-                                mGoogleApiClient, node, "/expense", data).await();
+                                wearUtils.getGoogleApiClient(), node, DataLayerWearListenerService.NEW_EXPENSE_PATH, data).await();
                         if (!result.getStatus().isSuccess()) {
                             Log.e(TAG, "ERROR: failed to send Message: " + result.getStatus());
                         } else {
@@ -112,13 +107,4 @@ public class NewExpenseWearActivity extends Activity {
         }).start();
     }
 
-    private Collection<String> getNodes() {
-        HashSet<String> results = new HashSet<String>();
-        NodeApi.GetConnectedNodesResult nodes =
-                Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
-        for (Node node : nodes.getNodes()) {
-            results.add(node.getId());
-        }
-        return results;
-    }
 }
