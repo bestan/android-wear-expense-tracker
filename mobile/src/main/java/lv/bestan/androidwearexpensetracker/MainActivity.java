@@ -1,9 +1,11 @@
 package lv.bestan.androidwearexpensetracker;
 
+import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -34,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
 
     private LinearLayout mListContainer;
     private TextView mTotalAmount;
-    private Button mHistory;
+    private ImageView mHistory;
     private RelativeLayout mContainer;
     private ImageView mAddExpense;
 
@@ -51,14 +53,15 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getActionBar().setTitle("Wear Expense Tracker");
+
         mContainer = (RelativeLayout) findViewById(R.id.container);
-        mHistory = (Button) findViewById(R.id.button_history);
+        mHistory = (ImageView) findViewById(R.id.button_history);
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
         mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
 
         updateTotalAmount();
-
-        getActionBar().setTitle("Overview");
 
         mHistory.setOnClickListener(new View.OnClickListener() {
 

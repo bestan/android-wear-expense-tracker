@@ -43,7 +43,7 @@ public class HistoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_history);
         getActionBar().setTitle("History");
 
-        this.mList = (ExpandableListView) findViewById(R.id.list);
+        mList = (ExpandableListView) findViewById(R.id.list);
 
         updateList();
 

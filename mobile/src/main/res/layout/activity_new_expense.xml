@@ -2,23 +2,43 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/background"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="lv.bestan.androidwearexpensetracker.NewExpenseActivity">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:text="Amount"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"/>
 
     <TextView
         android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
-        android:text="Amount: 0.00"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp"/>
+        android:layout_marginTop="80dp"
+        android:text="0.00"
+        android:textColor="#FFFFFF"
+        android:textSize="72sp"/>
+
 
     <TextView
         android:id="@+id/time"
@@ -26,17 +46,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/amount"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp"
-        android:text="Large Text"
+        android:layout_marginTop="50dp"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:text="14th July 2014"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <Button
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@+id/done"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="#FFFFFF"/>
+
+    <ImageView
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
-        android:text="Done"/>
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/button_done"/>
 
 </RelativeLayout>

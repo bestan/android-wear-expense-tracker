@@ -1,13 +1,9 @@
 package lv.bestan.androidwearexpensetracker;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -15,7 +11,6 @@ import com.doomonafireball.betterpickers.datepicker.DatePickerBuilder;
 import com.doomonafireball.betterpickers.datepicker.DatePickerDialogFragment;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
 import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
-import com.doomonafireball.betterpickers.timepicker.TimePickerBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +25,7 @@ public class NewExpenseActivity extends FragmentActivity {
 
     private double amount;
     private Calendar time;
-    private Button mDone;
+    private ImageView mDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +35,7 @@ public class NewExpenseActivity extends FragmentActivity {
 
         mAmount = (TextView) findViewById(R.id.amount);
         mTime = (TextView) findViewById(R.id.time);
-        mDone = (Button) findViewById(R.id.done);
+        mDone = (ImageView) findViewById(R.id.done);
 
         amount = 0;
         time = Calendar.getInstance();
@@ -88,7 +83,7 @@ public class NewExpenseActivity extends FragmentActivity {
     }
 
     private void updateFields() {
-        mAmount.setText("Amount: " + String.format("%.2f", amount));
+        mAmount.setText(String.format("%.2f", amount));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
         mTime.setText(dateFormat.format(time.getTime()));
