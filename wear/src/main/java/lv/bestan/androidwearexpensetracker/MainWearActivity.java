@@ -18,15 +18,15 @@ import com.google.android.gms.wearable.Wearable;
 public class MainWearActivity extends Activity {
 
     private static final String TAG = "MyWearActivity";
-    private TextView mTextView;
-    private Button mButton;
+    private TextView mAmount;
+    private Button mAddExpense;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive");
             Double amount = intent.getExtras().getDouble("amount");
-            mTextView.setText("Expenses this month: " + String.format("%.2f", amount));
+            mAmount.setText(String.format("%.2f", amount));
         }
     };
 
@@ -34,10 +34,10 @@ public class MainWearActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_wear);
-        mTextView = (TextView) findViewById(R.id.textView4);
-        mButton = (Button) findViewById(R.id.button2);
+        mAmount = (TextView) findViewById(R.id.amount);
+        mAddExpense = (Button) findViewById(R.id.button_add_expense);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewExpenseWearActivity();
