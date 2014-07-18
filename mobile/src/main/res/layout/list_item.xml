@@ -7,13 +7,24 @@
                 android:padding="20dp">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:layout_marginLeft="30dp"
         android:text="Text"
         android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_alignBottom="@+id/amount"
+        android:layout_toRightOf="@+id/amount"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:text="13th June 2013"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/delete"

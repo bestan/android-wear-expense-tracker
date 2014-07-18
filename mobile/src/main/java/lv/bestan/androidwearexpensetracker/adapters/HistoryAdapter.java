@@ -13,6 +13,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,8 +54,12 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.list_item, null);
         }
 
-        TextView textView = (TextView) convertView.findViewById(R.id.text);
-        textView.setText(""+expense.getAmount());
+        TextView amount = (TextView) convertView.findViewById(R.id.amount);
+        amount.setText("" + expense.getAmount());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        TextView time = (TextView) convertView.findViewById(R.id.time);
+        time.setText(sdf.format(expense.getTime().getTime()));
 
         ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
