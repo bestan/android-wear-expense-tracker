@@ -66,16 +66,18 @@ public class HistoryActivity extends ActionBarActivity {
         List<Expense> expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
 
         int currentMonth = 12;
+        int currentYear = 3000;
         MonthlyExpenses currentMonthlyExpenses = null;
         String currentMonthString = null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
 
         if (expenses != null && expenses.size() > 0) {
             for (Expense expense : expenses) {
                 int month = expense.getTime().get(Calendar.MONTH);
+                int year = expense.getTime().get(Calendar.YEAR);
                 Log.d(TAG, "expense: " + expense.getAmount() + " month: " + month);
 
-                if (month < currentMonth) {
+                if (year < currentYear || month < currentMonth) {
                     currentMonth = month;
                     currentMonthString = dateFormat.format(expense.getTime().getTime());
                     currentMonthlyExpenses = new MonthlyExpenses(currentMonthString);
