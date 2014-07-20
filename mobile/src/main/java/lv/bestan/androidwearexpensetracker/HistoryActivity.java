@@ -79,6 +79,7 @@ public class HistoryActivity extends ActionBarActivity {
 
                 if (year < currentYear || month < currentMonth) {
                     currentMonth = month;
+                    currentYear = year;
                     currentMonthString = dateFormat.format(expense.getTime().getTime());
                     currentMonthlyExpenses = new MonthlyExpenses(currentMonthString);
 
