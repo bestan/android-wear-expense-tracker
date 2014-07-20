@@ -8,4 +8,6 @@
     <string name="action_view_history">History</string>
     <string name="title_activity_new_expense">New Expense</string>
 
+    <string name="message_history_empty">You have no expenses!</string>
+
 </resources>

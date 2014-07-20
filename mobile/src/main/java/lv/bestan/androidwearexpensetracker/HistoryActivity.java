@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,29 +70,35 @@ public class HistoryActivity extends ActionBarActivity {
         String currentMonthString = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
 
-        for (Expense expense : expenses) {
-            int month = expense.getTime().get(Calendar.MONTH);
-            Log.d(TAG, "expense: " + expense.getAmount() + " month: " + month);
+        if (expenses != null && expenses.size() > 0) {
+            for (Expense expense : expenses) {
+                int month = expense.getTime().get(Calendar.MONTH);
+                Log.d(TAG, "expense: " + expense.getAmount() + " month: " + month);
 
-            if (month < currentMonth) {
-                currentMonth = month;
-                currentMonthString = dateFormat.format(expense.getTime().getTime());
-                currentMonthlyExpenses = new MonthlyExpenses(currentMonthString);
+                if (month < currentMonth) {
+                    currentMonth = month;
+                    currentMonthString = dateFormat.format(expense.getTime().getTime());
+                    currentMonthlyExpenses = new MonthlyExpenses(currentMonthString);
 
-                months.add(currentMonthlyExpenses);
-                expensesMonthMap.put(currentMonthlyExpenses, new ArrayList<Expense>());
+                    months.add(currentMonthlyExpenses);
+                    expensesMonthMap.put(currentMonthlyExpenses, new ArrayList<Expense>());
+                }
+
+                currentMonthlyExpenses.increaseTotalAmount(expense.getAmount());
+                expensesMonthMap.get(currentMonthlyExpenses).add(expense);
             }
 
-            currentMonthlyExpenses.increaseTotalAmount(expense.getAmount());
-            expensesMonthMap.get(currentMonthlyExpenses).add(expense);
+            mAdapter = new HistoryAdapter(this, months, expensesMonthMap);
+            mList.setAdapter(mAdapter);
+            mList.expandGroup(0);
+
+            mAdapter.notifyDataSetInvalidated();
+            mList.invalidate();
+        } else {
+            Toast.makeText(this, R.string.message_history_empty, Toast.LENGTH_LONG).show();
+            finish();
         }
 
-        mAdapter = new HistoryAdapter(this, months, expensesMonthMap);
-        mList.setAdapter(mAdapter);
-        mList.expandGroup(0);
-
-        mAdapter.notifyDataSetInvalidated();
-        mList.invalidate();
     }
 
 }
