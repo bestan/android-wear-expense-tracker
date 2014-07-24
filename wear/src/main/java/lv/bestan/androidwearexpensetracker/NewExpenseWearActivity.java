@@ -6,19 +6,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
 import android.support.wearable.activity.ConfirmationActivity;
-import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 public class NewExpenseWearActivity extends Activity {
@@ -28,11 +21,25 @@ public class NewExpenseWearActivity extends Activity {
 
     private TextView mCounter;
 
+
+    private int onResumeCount;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onResumeCount++;
+        if (onResumeCount >= 2) {
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense_wear);
         mCounter = (TextView) findViewById(R.id.counter);
+
+        onResumeCount = 0;
 
         new CountDownTimer(3000, 1000) {
 
@@ -53,8 +60,6 @@ public class NewExpenseWearActivity extends Activity {
 
     }
 
-    // This callback is invoked when the Speech Recognizer returns.
-    // This is where you process the intent and extract the speech text from the intent.
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
@@ -79,7 +84,6 @@ public class NewExpenseWearActivity extends Activity {
     }
 
     private void sendExpense(final double expense) {
-        finish();
         new Thread(new Runnable() {
 
             @Override
@@ -104,7 +108,6 @@ public class NewExpenseWearActivity extends Activity {
                             Intent intent = new Intent(NewExpenseWearActivity.this, ConfirmationActivity.class);
                             intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
                             startActivity(intent);
-//                            finish();
                         }
                     });
                 } catch (Exception e) {
