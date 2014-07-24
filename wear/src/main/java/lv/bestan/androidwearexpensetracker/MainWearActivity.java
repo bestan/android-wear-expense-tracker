@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -29,8 +30,7 @@ public class MainWearActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive");
-            Double amount = intent.getExtras().getDouble("amount");
-            mAmount.setText(String.format("%.2f", amount));
+            retrieveDataFromSharedPreferences();
         }
     };
 
@@ -51,6 +51,8 @@ public class MainWearActivity extends Activity {
                 openNewExpenseWearActivity();
             }
         });
+
+        retrieveDataFromSharedPreferences();
 
         IntentFilter intentFilter = new IntentFilter("expenses_update");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
@@ -96,5 +98,13 @@ public class MainWearActivity extends Activity {
                 }
             }
         }).start();
+    }
+
+    private void retrieveDataFromSharedPreferences() {
+        SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
+        double amount = Double.valueOf(prefs.getString("amount", "0.00"));
+
+        if (mAmount != null)
+            mAmount.setText(String.format("%.2f", amount));
     }
 }

@@ -1,6 +1,8 @@
 package lv.bestan.androidwearexpensetracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -24,8 +26,10 @@ public class DataLayerWearListenerService extends WearableListenerService {
             Double amount = Double.valueOf(text);
             Log.d(TAG, "Expense: :" + amount);
 
+            SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
+            prefs.edit().putString("amount", String.valueOf(amount)).commit();
+
             Intent intent = new Intent("expenses_update");
-            intent.putExtra("amount", amount);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         } catch (Exception e) {
