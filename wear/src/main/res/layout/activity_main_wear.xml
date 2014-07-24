@@ -13,8 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="July expenses"
-        android:textSize="20sp"/>
+        android:text="Expenses"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/amount"
@@ -25,8 +25,8 @@
         android:layout_below="@+id/amount_text"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="20.00"
-        android:textSize="24sp"/>
+        android:text="0.00"
+        android:textSize="50sp"/>
 
     <Button
         android:id="@+id/button_add_expense"

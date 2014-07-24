@@ -15,10 +15,14 @@ import android.widget.TextView;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class MainWearActivity extends Activity {
 
     private static final String TAG = "MyWearActivity";
     private TextView mAmount;
+    private TextView mAmountText;
     private Button mAddExpense;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -35,7 +39,11 @@ public class MainWearActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_wear);
         mAmount = (TextView) findViewById(R.id.amount);
+        mAmountText = (TextView) findViewById(R.id.amount_text);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+        mAmountText.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
 
         mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
