@@ -97,8 +97,8 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         MonthlyExpenses monthlyExpenses = (MonthlyExpenses) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group, null);
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_group, null);
         }
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.month);
