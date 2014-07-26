@@ -51,7 +51,7 @@ public class NewExpenseWearActivity extends Activity {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                         RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Expense");
                 // Start the activity, the intent will be populated with the speech text
                 startActivityForResult(intent, SPEECH_REQUEST_CODE);
             }
@@ -60,25 +60,26 @@ public class NewExpenseWearActivity extends Activity {
 
     }
 
+    private void analyseSpokenText(String spokenText) {
+        spokenText = spokenText.replaceAll("$", "").replaceAll("€", "").replaceAll("£", "");
+
+        for (String word : spokenText.split(" ")) {
+            try {
+                Double amount = Double.valueOf(word);
+                sendExpense(amount);
+                break;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
-            List<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0);
-
-            String numberString = null;
-            for (String word : spokenText.split(" ")) {
-                try {
-                    Double amount = Double.valueOf(word);
-                    sendExpense(amount);
-                    break;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
+            List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            analyseSpokenText(results.get(0));
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
