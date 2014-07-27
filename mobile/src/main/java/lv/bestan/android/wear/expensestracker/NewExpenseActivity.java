@@ -80,6 +80,8 @@ public class NewExpenseActivity extends FragmentActivity {
                 onBackPressed();
             }
         });
+
+        ExpensesApplication.getInstance().sendScreenView("NewExpenseActivity");
     }
 
     private void updateFields() {

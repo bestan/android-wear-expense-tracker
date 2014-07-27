@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- The screen names that will appear in reports -->
+    <screenName name="lv.bestan.android.wear.expensestracker.MainActivity">
+        MainActivity
+    </screenName>
+    
+    <screenName name="lv.bestan.android.wear.expensestracker.NewExpenseActivity">
+        NewExpenseActivity
+    </screenName>
+    
+    <screenName name="lv.bestan.android.wear.expensestracker.HistoryActivity">
+        HistoryActivity
+    </screenName>
+    
+    <string name="ga_trackingId">UA-53249807-3</string>
+</resources>

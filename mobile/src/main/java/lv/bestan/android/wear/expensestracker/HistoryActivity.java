@@ -51,6 +51,8 @@ public class HistoryActivity extends ActionBarActivity {
         IntentFilter intentFilter = new IntentFilter("add_expense_event");
         intentFilter.addAction("delete_expense_event");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+
+        ExpensesApplication.getInstance().sendScreenView("HistoryActivity");
     }
 
     @Override

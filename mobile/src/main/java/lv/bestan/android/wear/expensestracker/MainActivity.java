@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -75,6 +77,8 @@ public class MainActivity extends ActionBarActivity {
         IntentFilter intentFilter = new IntentFilter("add_expense_event");
         intentFilter.addAction("delete_expense_event");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+
+        ExpensesApplication.getInstance().sendScreenView("MainActivity");
     }
 
     @Override
