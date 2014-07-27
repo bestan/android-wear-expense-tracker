@@ -1,12 +1,12 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.util.Log;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
-import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
-import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Expense;
 
 /**
  * Created by Stan on 07/07/2014.

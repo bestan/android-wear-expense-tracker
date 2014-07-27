@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -57,7 +57,7 @@ public class MainWearActivity extends Activity {
         IntentFilter intentFilter = new IntentFilter("expenses_update");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
 
-        if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.androidwearexpensetracker")) {
+        if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.android.wear.androidwearexpensetracker")) {
             openNewExpenseWearActivity();
         }
 

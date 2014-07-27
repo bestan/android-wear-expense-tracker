@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker.adapters;
+package lv.bestan.android.wear.expensestracker.adapters;
 
 /**
  * Created by Stan on 05/07/2014.
@@ -17,10 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import lv.bestan.androidwearexpensetracker.R;
-import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
-import lv.bestan.androidwearexpensetracker.models.Expense;
-import lv.bestan.androidwearexpensetracker.models.MonthlyExpenses;
+import lv.bestan.android.wear.expensestracker.R;
+import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.models.MonthlyExpenses;
 
 public class HistoryAdapter extends BaseExpandableListAdapter {
 

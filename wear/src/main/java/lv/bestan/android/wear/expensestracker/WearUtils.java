@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.content.Context;
 

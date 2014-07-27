@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,10 +17,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import lv.bestan.androidwearexpensetracker.adapters.HistoryAdapter;
-import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
-import lv.bestan.androidwearexpensetracker.models.Expense;
-import lv.bestan.androidwearexpensetracker.models.MonthlyExpenses;
+import lv.bestan.android.wear.expensestracker.adapters.HistoryAdapter;
+import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.models.MonthlyExpenses;
 
 /**
  * Created by Stan on 05/07/2014.

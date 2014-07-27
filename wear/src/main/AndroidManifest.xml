@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="lv.bestan.androidwearexpensetracker"
+    package="lv.bestan.android.wear.expensestracker"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature android:name="android.hardware.type.watch"/>
@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity
-            android:name=".MainWearActivity"
+            android:name="lv.bestan.android.wear.expensestracker.MainWearActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,12 +20,12 @@
         </activity>
 
         <activity
-            android:name=".NewExpenseWearActivity"/>
+            android:name="lv.bestan.android.wear.expensestracker.NewExpenseWearActivity"/>
 
         <activity
             android:name="android.support.wearable.activity.ConfirmationActivity"/>
 
-        <service android:name=".DataLayerWearListenerService">
+        <service android:name="lv.bestan.android.wear.expensestracker.DataLayerWearListenerService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>
             </intent-filter>

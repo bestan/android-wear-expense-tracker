@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker.models;
+package lv.bestan.android.wear.expensestracker.models;
 
 /**
  * Created by Stan on 12/07/2014.

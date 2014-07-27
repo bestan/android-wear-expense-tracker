@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker.db;
+package lv.bestan.android.wear.expensestracker.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

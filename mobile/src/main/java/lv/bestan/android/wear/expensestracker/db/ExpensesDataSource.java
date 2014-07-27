@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker.db;
+package lv.bestan.android.wear.expensestracker.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.models.Expense;
 
 /**
  * Created by Stan on 11/07/2014.

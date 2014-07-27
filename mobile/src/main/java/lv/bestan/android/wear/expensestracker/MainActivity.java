@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
-import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Expense;
 
 
 public class MainActivity extends ActionBarActivity {

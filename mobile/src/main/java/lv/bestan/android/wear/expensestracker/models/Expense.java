@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker.models;
+package lv.bestan.android.wear.expensestracker.models;
 
 import java.util.Calendar;
 

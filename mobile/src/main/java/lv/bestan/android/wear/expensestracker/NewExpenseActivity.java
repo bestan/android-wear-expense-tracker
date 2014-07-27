@@ -1,4 +1,4 @@
-package lv.bestan.androidwearexpensetracker;
+package lv.bestan.android.wear.expensestracker;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,8 +15,8 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import lv.bestan.androidwearexpensetracker.db.ExpensesDataSource;
-import lv.bestan.androidwearexpensetracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Expense;
 
 public class NewExpenseActivity extends FragmentActivity {
 
