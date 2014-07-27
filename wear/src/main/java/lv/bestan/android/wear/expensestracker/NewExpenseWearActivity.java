@@ -19,7 +19,7 @@ public class NewExpenseWearActivity extends Activity {
     private static final String TAG = "NewExpenseWearActivity";
     private static final int SPEECH_REQUEST_CODE = 0;
 
-    private TextView mCounter;
+    private TextView mTitle;
 
 
     private int onResumeCount;
@@ -36,32 +36,39 @@ public class NewExpenseWearActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_expense_wear);
-        mCounter = (TextView) findViewById(R.id.counter);
 
         onResumeCount = 0;
 
-        new CountDownTimer(3000, 1000) {
+        boolean skipSplash = getIntent().getExtras().getBoolean("SKIP_SPLASH");
+        if (skipSplash) {
+            startSpeechRecognizer();
+        } else {
+            setContentView(R.layout.activity_new_expense_wear);
+            mTitle = (TextView) findViewById(R.id.title);
+            new CountDownTimer(3000, 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                mCounter.setText(""+millisUntilFinished / 1000);
-            }
+                public void onTick(long millisUntilFinished) {
+                    mTitle.setText(mTitle.getText() + ".");
+                }
 
-            public void onFinish() {
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Expense");
-                // Start the activity, the intent will be populated with the speech text
-                startActivityForResult(intent, SPEECH_REQUEST_CODE);
-            }
-        }.start();
-
+                public void onFinish() {
+                    startSpeechRecognizer();
+                }
+            }.start();
+        }
 
     }
 
+    private void startSpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Expense");
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
+
     private void analyseSpokenText(String spokenText) {
-        spokenText = spokenText.replaceAll("$", "").replaceAll("€", "").replaceAll("£", "");
+        spokenText = spokenText.replaceAll("\\$", "").replaceAll("€", "").replaceAll("£", "");
 
         for (String word : spokenText.split(" ")) {
             try {

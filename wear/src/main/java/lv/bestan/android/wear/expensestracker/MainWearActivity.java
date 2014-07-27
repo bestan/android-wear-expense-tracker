@@ -48,7 +48,7 @@ public class MainWearActivity extends Activity {
         mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewExpenseWearActivity();
+                openNewExpenseWearActivity(true);
             }
         });
 
@@ -57,8 +57,8 @@ public class MainWearActivity extends Activity {
         IntentFilter intentFilter = new IntentFilter("expenses_update");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
 
-        if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.android.wear.androidwearexpensetracker")) {
-            openNewExpenseWearActivity();
+        if (getIntent().getPackage() != null && getIntent().getPackage().equals("lv.bestan.android.wear.expensestracker")) {
+            openNewExpenseWearActivity(false);
         }
 
     }
@@ -75,8 +75,9 @@ public class MainWearActivity extends Activity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    private void openNewExpenseWearActivity() {
+    private void openNewExpenseWearActivity(boolean skipSplash) {
         Intent intent = new Intent(this, NewExpenseWearActivity.class);
+        intent.putExtra("SKIP_SPLASH", skipSplash);
         startActivity(intent);
     }
 
