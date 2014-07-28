@@ -28,7 +28,6 @@ public class ExpensesApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
     }
 
     public void sendScreenView(String screen) {

@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
@@ -77,7 +76,6 @@ public class HistoryActivity extends ActionBarActivity {
             for (Expense expense : expenses) {
                 int month = expense.getTime().get(Calendar.MONTH);
                 int year = expense.getTime().get(Calendar.YEAR);
-                Log.d(TAG, "expense: " + expense.getAmount() + " month: " + month);
 
                 if (year < currentYear || month < currentMonth) {
                     currentMonth = month;

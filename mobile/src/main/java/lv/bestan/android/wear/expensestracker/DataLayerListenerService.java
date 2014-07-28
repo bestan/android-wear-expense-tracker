@@ -24,7 +24,7 @@ public class DataLayerListenerService extends WearableListenerService {
                 byte[] data = messageEvent.getData();
                 String text = new String(data, "UTF-8");
                 Double amount = Double.valueOf(text);
-                Log.d(TAG, "Expense: :" + amount);
+                Log.d(TAG, "Message Received, expense: :" + amount);
 
                 Expense expense = new Expense(amount);
                 ExpensesDataSource.getInstance(this).saveExpense(expense);

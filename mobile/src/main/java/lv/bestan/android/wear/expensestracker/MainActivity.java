@@ -7,16 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.google.android.gms.analytics.HitBuilders;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,13 +26,11 @@ public class MainActivity extends ActionBarActivity {
 
     private TextView mTotalAmount;
     private ImageView mHistory;
-    private RelativeLayout mContainer;
     private ImageView mAddExpense;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive");
             expenses = ExpensesDataSource.getInstance(MainActivity.this).getAllExpenses();
             updateTotalAmount();
         }
@@ -52,7 +43,6 @@ public class MainActivity extends ActionBarActivity {
 
         getActionBar().setTitle("Wear Expense Tracker");
 
-        mContainer = (RelativeLayout) findViewById(R.id.container);
         mHistory = (ImageView) findViewById(R.id.button_history);
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
         mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
@@ -85,7 +75,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-        Log.d(TAG, "OnDestroy");
     }
 
     private void updateTotalAmount() {
@@ -128,26 +117,26 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_expense:
-                openNewExpenseActivity();
-                return true;
-            case R.id.action_view_history:
-                openHistoryActivity();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_add_expense:
+//                openNewExpenseActivity();
+//                return true;
+//            case R.id.action_view_history:
+//                openHistoryActivity();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     private void openNewExpenseActivity() {
         Intent intent = new Intent(MainActivity.this, NewExpenseActivity.class);
