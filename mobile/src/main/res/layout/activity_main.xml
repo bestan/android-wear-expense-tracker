@@ -13,36 +13,37 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:text="Total Expenses"
-        android:id="@+id/title"
         android:textColor="#FFFFFF"
         android:textSize="24sp"/>
 
     <View
         android:layout_width="match_parent"
-        android:background="#FFFFFF"
-        android:layout_marginTop="20dp"
+        android:layout_height="1px"
+        android:layout_below="@+id/title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/title"
-        android:layout_height="1px"/>
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"/>
+
 
     <TextView
         android:id="@+id/total_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:text="0.00"
         android:textColor="#FFFFFF"
         android:textSize="72sp"/>
 
-    <ImageView
+    <Button
         android:id="@+id/button_add_expense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,10 +53,13 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/button_add_expense"/>
+        android:background="@drawable/button_background"
+        android:text="Add Expense"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"/>
 
 
-    <ImageView
+    <Button
         android:id="@+id/button_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +68,10 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/button_history"
+        android:background="@drawable/button_background"
+        android:text="History"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         />
 
 </RelativeLayout>

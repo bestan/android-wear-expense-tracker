@@ -25,7 +25,7 @@
         android:layout_below="@+id/title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="#FFFFFF"/>
 
     <TextView
@@ -61,13 +61,16 @@
         android:layout_marginBottom="25dp"
         android:background="#FFFFFF"/>
 
-    <ImageView
+    <Button
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/button_done"/>
+        android:text="Done"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"/>
 
 </RelativeLayout>

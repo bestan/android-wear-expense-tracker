@@ -3,6 +3,7 @@ package lv.bestan.android.wear.expensestracker;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ public class NewExpenseActivity extends FragmentActivity {
 
     private double amount;
     private Calendar time;
-    private ImageView mDone;
+    private Button mDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class NewExpenseActivity extends FragmentActivity {
 
         mAmount = (TextView) findViewById(R.id.amount);
         mTime = (TextView) findViewById(R.id.time);
-        mDone = (ImageView) findViewById(R.id.done);
+        mDone = (Button) findViewById(R.id.done);
 
         amount = 0;
         time = Calendar.getInstance();

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +26,8 @@ public class MainActivity extends ActionBarActivity {
     public static List<Expense> expenses;
 
     private TextView mTotalAmount;
-    private ImageView mHistory;
-    private ImageView mAddExpense;
+    private Button mHistory;
+    private Button mAddExpense;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -43,9 +44,9 @@ public class MainActivity extends ActionBarActivity {
 
         getActionBar().setTitle("Wear Expense Tracker");
 
-        mHistory = (ImageView) findViewById(R.id.button_history);
+        mHistory = (Button) findViewById(R.id.button_history);
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
-        mAddExpense = (ImageView) findViewById(R.id.button_add_expense);
+        mAddExpense = (Button) findViewById(R.id.button_add_expense);
 
         updateTotalAmount();
 
