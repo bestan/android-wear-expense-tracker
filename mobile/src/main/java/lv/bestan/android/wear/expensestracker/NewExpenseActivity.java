@@ -88,7 +88,7 @@ public class NewExpenseActivity extends FragmentActivity {
     private void updateFields() {
         mAmount.setText(String.format("%.2f", amount));
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         mTime.setText(dateFormat.format(time.getTime()));
     }
 
