@@ -13,6 +13,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="Get ready to add new expense"
+        android:fontFamily="sans-serif-light"
         android:textColor="#FFFFFF"
         android:textSize="23sp"
         />

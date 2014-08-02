@@ -13,12 +13,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:fontFamily="sans-serif-light"
         android:text="Expenses"
         android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/amount"
         android:layout_width="match_parent"
+        android:fontFamily="sans-serif-light"
         android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -35,7 +37,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:background="#84a63d"
+        android:fontFamily="sans-serif-light"
+        android:background="@drawable/button_background_small"
         android:padding="5dp"
         android:text="@string/new_expense"/>
 
