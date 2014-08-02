@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MainActivity";
     public static List<Expense> expenses;
 
+    private TextView mTitle;
     private TextView mTotalAmount;
     private Button mHistory;
     private Button mAddExpense;
@@ -44,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
 
         getActionBar().setTitle("Wear Expense Tracker");
 
+        mTitle = (TextView) findViewById(R.id.title);
         mHistory = (Button) findViewById(R.id.button_history);
         mTotalAmount = (TextView) findViewById(R.id.total_amount);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
@@ -73,6 +76,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+        mTitle.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
@@ -80,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void updateTotalAmount() {
         double total_amount = 0;
-        expenses = ExpensesDataSource.getInstance(this).getAllExpenses();
+        expenses = ExpensesDataSource.getInstance(this).getExpensesForCurrentMonth();
         for (Expense expense : expenses) {
             total_amount += expense.getAmount();
         }
