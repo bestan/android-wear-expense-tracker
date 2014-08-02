@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
-        android:layout_alignBottom="@+id/amount"
+        android:layout_alignBaseline="@+id/amount"
         android:layout_toRightOf="@+id/amount"
         android:textColor="#FFFFFF"
         android:layout_marginLeft="20dp"
