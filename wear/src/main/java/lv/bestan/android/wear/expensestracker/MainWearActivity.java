@@ -42,8 +42,6 @@ public class MainWearActivity extends Activity {
         mAmountText = (TextView) findViewById(R.id.amount_text);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
-        mAmountText.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
 
         mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +64,8 @@ public class MainWearActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
+        mAmountText.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
         requestExpensesUpdate();
     }
 
