@@ -2,7 +2,6 @@
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#298f38"
@@ -27,8 +26,9 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="30dp"
         android:text="0.00"
+        android:maxLines="1"
         android:textColor="#FFFFFF"
-        android:textSize="100sp"/>
+        android:textSize="80sp"/>
 
 
     <TextView

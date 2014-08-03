@@ -16,6 +16,8 @@ import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
+import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
@@ -97,7 +99,8 @@ public class NewExpenseActivity extends FragmentActivity {
     }
 
     private void updateFields() {
-        mAmount.setText(String.format("%.2f", amount));
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        mAmount.setText(currency.getSymbol() + String.format("%.2f", amount));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         mTime.setText(dateFormat.format(time.getTime()));

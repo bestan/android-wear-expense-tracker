@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.R;
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
@@ -55,7 +57,8 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
         }
 
         TextView amount = (TextView) convertView.findViewById(R.id.amount);
-        amount.setText("" + expense.getAmount());
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        amount.setText(currency.getSymbol() + expense.getAmount());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         TextView time = (TextView) convertView.findViewById(R.id.time);
@@ -105,7 +108,9 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
         lblListHeader.setText(monthlyExpenses.getMonth());
 
         TextView total = (TextView) convertView.findViewById(R.id.total);
-        total.setText(String.format("%.2f", monthlyExpenses.getTotalAmount()));
+
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        total.setText(currency.getSymbol() + String.format("%.2f", monthlyExpenses.getTotalAmount()));
 
         return convertView;
     }
