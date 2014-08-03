@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wear_background">
+    android:background="#298f38">
 
     <TextView
         android:id="@+id/title"
@@ -13,7 +13,6 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="Get ready to add new expense"
-        android:fontFamily="sans-serif-light"
         android:textColor="#FFFFFF"
         android:textSize="23sp"
         />
