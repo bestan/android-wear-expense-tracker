@@ -1,10 +1,11 @@
 package lv.bestan.android.wear.expensestracker;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import java.util.Calendar;
 
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewExpenseActivity extends FragmentActivity {
 
@@ -27,6 +30,11 @@ public class NewExpenseActivity extends FragmentActivity {
     private double amount;
     private Calendar time;
     private Button mDone;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +87,11 @@ public class NewExpenseActivity extends FragmentActivity {
                 ExpensesDataSource.getInstance(NewExpenseActivity.this).saveExpense(expense);
                 onBackPressed();
             }
+
         });
+
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container);
+        BackgroundHelper.updateBackground(viewGroup);
 
         ExpensesApplication.getInstance().sendScreenView("NewExpenseActivity");
     }

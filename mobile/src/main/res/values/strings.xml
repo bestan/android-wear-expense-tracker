@@ -18,4 +18,6 @@
     <string name="add_expense">Add expense</string>
     <string name="history">History</string>
 
+    <!-- New Expense screen -->
+    <string name="done">Done</string>
 </resources>

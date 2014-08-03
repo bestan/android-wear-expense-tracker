@@ -102,7 +102,6 @@ public class HistoryAdapter extends BaseExpandableListAdapter {
         }
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.month);
-        lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(monthlyExpenses.getMonth());
 
         TextView total = (TextView) convertView.findViewById(R.id.total);

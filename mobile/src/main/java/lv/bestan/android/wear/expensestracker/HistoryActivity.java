@@ -7,7 +7,10 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +23,8 @@ import lv.bestan.android.wear.expensestracker.adapters.HistoryAdapter;
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
 import lv.bestan.android.wear.expensestracker.models.MonthlyExpenses;
+import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Stan on 05/07/2014.
@@ -27,6 +32,7 @@ import lv.bestan.android.wear.expensestracker.models.MonthlyExpenses;
 public class HistoryActivity extends ActionBarActivity {
 
     private static final String TAG = "HistoryActivity";
+    private LinearLayout mContainer;
     private ExpandableListView mList;
     private HistoryAdapter mAdapter;
 
@@ -38,10 +44,16 @@ public class HistoryActivity extends ActionBarActivity {
     };
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        mContainer = (LinearLayout) findViewById(R.id.container);
         mList = (ExpandableListView) findViewById(R.id.list);
 
         updateList();
@@ -72,6 +84,7 @@ public class HistoryActivity extends ActionBarActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy");
 
         if (expenses != null && expenses.size() > 0) {
+            BackgroundHelper.updateBackground(mContainer);
             for (Expense expense : expenses) {
                 int month = expense.getTime().get(Calendar.MONTH);
                 int year = expense.getTime().get(Calendar.YEAR);

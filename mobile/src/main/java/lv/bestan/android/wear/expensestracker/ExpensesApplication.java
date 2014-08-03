@@ -29,7 +29,7 @@ public class ExpensesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CalligraphyConfig.initDefault("campton_light.otf", R.attr.fontPath);
+        CalligraphyConfig.initDefault("Campton.Light.otf", R.attr.fontPath);
         instance = this;
     }
 

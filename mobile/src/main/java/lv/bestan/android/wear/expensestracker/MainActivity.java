@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +26,7 @@ import java.util.Locale;
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Budget;
 import lv.bestan.android.wear.expensestracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -138,14 +138,7 @@ public class MainActivity extends ActionBarActivity {
         double budget = Budget.getAmount(this);
         mBudget.setText(String.format(getString(R.string.budget), currency.getSymbol() + String.format("%.2f", budget)));
 
-        double percentage = total_amount / budget;
-        if (percentage > 0.9) {
-            mContainer.setBackgroundColor(Color.parseColor("#8f3329"));
-        } else if (percentage > 0.7) {
-            mContainer.setBackgroundColor(Color.parseColor("#8f4d29"));
-        } else {
-            mContainer.setBackgroundColor(Color.parseColor("#298f38"));
-        }
+        BackgroundHelper.updateBackground(mContainer, total_amount, budget);
     }
 
     private void deleteAllExpenses() {
