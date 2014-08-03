@@ -41,7 +41,6 @@ public class HistoryActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        getActionBar().setTitle("History");
 
         mList = (ExpandableListView) findViewById(R.id.list);
 

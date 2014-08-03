@@ -8,6 +8,8 @@ import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 /**
  * Created by Stan on 27/07/2014.
  */
@@ -27,6 +29,7 @@ public class ExpensesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CalligraphyConfig.initDefault("campton_light.otf", R.attr.fontPath);
         instance = this;
     }
 

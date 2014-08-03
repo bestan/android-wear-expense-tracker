@@ -10,4 +10,12 @@
 
     <string name="message_history_empty">You have no expenses!</string>
 
+
+    <!-- Main Screen -->
+    <string name="title_spent">You’ve spent\na total of</string>
+    <string name="month">this %s</string>
+    <string name="budget">out of your %s budget"</string>
+    <string name="add_expense">Add expense</string>
+    <string name="history">History</string>
+
 </resources>

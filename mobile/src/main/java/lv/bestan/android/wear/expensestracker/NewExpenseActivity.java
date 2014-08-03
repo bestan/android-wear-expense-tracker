@@ -32,7 +32,6 @@ public class NewExpenseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_expense);
-        getActionBar().setTitle("New expense");
 
         mAmount = (TextView) findViewById(R.id.amount);
         mTime = (TextView) findViewById(R.id.time);

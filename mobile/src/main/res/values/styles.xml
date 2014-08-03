@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">

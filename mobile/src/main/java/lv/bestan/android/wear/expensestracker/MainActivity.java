@@ -4,21 +4,30 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerBuilder;
+import com.doomonafireball.betterpickers.numberpicker.NumberPickerDialogFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
+import lv.bestan.android.wear.expensestracker.models.Budget;
 import lv.bestan.android.wear.expensestracker.models.Expense;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -27,31 +36,40 @@ public class MainActivity extends ActionBarActivity {
     public static List<Expense> expenses;
 
     private TextView mTitle;
-    private TextView mTotalAmount;
+    private TextView mAmount;
     private Button mHistory;
     private Button mAddExpense;
+    private TextView mMonth;
+    private TextView mBudget;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             expenses = ExpensesDataSource.getInstance(MainActivity.this).getAllExpenses();
-            updateTotalAmount();
+            updateValues();
         }
     };
+    private RelativeLayout mContainer;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getActionBar().setTitle("Wear Expense Tracker");
-
+        mContainer = (RelativeLayout) findViewById(R.id.container);
         mTitle = (TextView) findViewById(R.id.title);
         mHistory = (Button) findViewById(R.id.button_history);
-        mTotalAmount = (TextView) findViewById(R.id.total_amount);
+        mAmount = (TextView) findViewById(R.id.amount);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
+        mMonth = (TextView) findViewById(R.id.month);
+        mBudget = (TextView) findViewById(R.id.budget);
 
-        updateTotalAmount();
+        updateValues();
 
         mHistory.setOnClickListener(new View.OnClickListener() {
 
@@ -68,6 +86,25 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        mBudget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                NumberPickerBuilder npb = new NumberPickerBuilder()
+                        .setFragmentManager(getSupportFragmentManager())
+                        .setPlusMinusVisibility(NumberPicker.INVISIBLE)
+                        .setStyleResId(R.style.BetterPickersDialogFragment);
+                npb.show();
+                npb.addNumberPickerDialogHandler(new NumberPickerDialogFragment.NumberPickerDialogHandler() {
+                    @Override
+                    public void onDialogNumberSet(int reference, int number, double decimal, boolean isNegative, double fullNumber) {
+                        Budget.setAmount(MainActivity.this, fullNumber);
+                        updateValues();
+                    }
+                });
+            }
+        });
+
         IntentFilter intentFilter = new IntentFilter("add_expense_event");
         intentFilter.addAction("delete_expense_event");
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
@@ -79,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
-        mTitle.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
+        mMonth.setText(String.format(getString(R.string.month), dateFormat.format(Calendar.getInstance().getTime())));
     }
 
     @Override
@@ -88,13 +125,27 @@ public class MainActivity extends ActionBarActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    private void updateTotalAmount() {
+    private void updateValues() {
         double total_amount = 0;
         expenses = ExpensesDataSource.getInstance(this).getExpensesForCurrentMonth();
         for (Expense expense : expenses) {
             total_amount += expense.getAmount();
         }
-        mTotalAmount.setText("" + String.format("%.2f", total_amount));
+
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        mAmount.setText(currency.getSymbol() + String.format("%.2f", total_amount));
+
+        double budget = Budget.getAmount(this);
+        mBudget.setText(String.format(getString(R.string.budget), currency.getSymbol() + String.format("%.2f", budget)));
+
+        double percentage = total_amount / budget;
+        if (percentage > 0.9) {
+            mContainer.setBackgroundColor(Color.parseColor("#8f3329"));
+        } else if (percentage > 0.7) {
+            mContainer.setBackgroundColor(Color.parseColor("#8f4d29"));
+        } else {
+            mContainer.setBackgroundColor(Color.parseColor("#298f38"));
+        }
     }
 
     private void deleteAllExpenses() {
@@ -127,27 +178,6 @@ public class MainActivity extends ActionBarActivity {
             ExpensesDataSource.getInstance(this).saveExpense(expense);
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_add_expense:
-//                openNewExpenseActivity();
-//                return true;
-//            case R.id.action_view_history:
-//                openHistoryActivity();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     private void openNewExpenseActivity() {
         Intent intent = new Intent(MainActivity.this, NewExpenseActivity.class);
