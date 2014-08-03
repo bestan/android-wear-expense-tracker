@@ -28,7 +28,7 @@ public class MainWearActivity extends Activity {
     private static final String TAG = "MyWearActivity";
     private RelativeLayout mContainer;
     private TextView mAmount;
-    private TextView mAmountText;
+    private TextView mMonth;
     private Button mAddExpense;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -50,7 +50,7 @@ public class MainWearActivity extends Activity {
         setContentView(R.layout.activity_main_wear);
         mContainer = (RelativeLayout) findViewById(R.id.container);
         mAmount = (TextView) findViewById(R.id.amount);
-        mAmountText = (TextView) findViewById(R.id.amount_text);
+        mMonth = (TextView) findViewById(R.id.month);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
 
 
@@ -76,7 +76,7 @@ public class MainWearActivity extends Activity {
     protected void onResume() {
         super.onResume();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM");
-        mAmountText.setText(dateFormat.format(Calendar.getInstance().getTime()) + " expenses");
+        mMonth.setText(String.format(getString(R.string.month), dateFormat.format(Calendar.getInstance().getTime())));
         requestExpensesUpdate();
     }
 

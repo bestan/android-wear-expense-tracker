@@ -7,14 +7,13 @@
     android:background="#298f38">
 
     <TextView
-        android:id="@+id/amount_text"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="Expenses"
+        android:text="@string/title_spent"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
 
@@ -22,14 +21,23 @@
         android:id="@+id/amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/amount_text"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="0.00"
         android:textColor="#FFFFFF"
         android:textSize="50sp"/>
+
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/amount"
+        android:gravity="center"
+        android:text="@string/month"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/button_add_expense"

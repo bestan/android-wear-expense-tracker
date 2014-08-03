@@ -4,5 +4,7 @@
     <string name="app_name">Expenses</string>
     <string name="title_activity_new_expense_wear">New expense</string>
     <string name="add_expense">ADD EXPENSE</string>
+    <string name="title_spent">You’ve spent</string>
+    <string name="month">this %s</string>
 
 </resources>
