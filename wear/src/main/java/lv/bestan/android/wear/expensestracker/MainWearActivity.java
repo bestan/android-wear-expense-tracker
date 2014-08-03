@@ -123,7 +123,7 @@ public class MainWearActivity extends Activity {
             mAmount.setText(currency.getSymbol() + String.format("%.2f", amount));
         }
 
-        float budget = prefs.getFloat("budget", 500);
+        double budget = Double.valueOf(prefs.getString("budget", "500"));
         BackgroundHelper.updateBackground(mContainer, amount, budget);
     }
 }

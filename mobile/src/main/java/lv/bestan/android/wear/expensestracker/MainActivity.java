@@ -100,6 +100,7 @@ public class MainActivity extends ActionBarActivity {
                     public void onDialogNumberSet(int reference, int number, double decimal, boolean isNegative, double fullNumber) {
                         Budget.setAmount(MainActivity.this, fullNumber);
                         updateValues();
+                        ExpensesDataSource.getInstance(MainActivity.this).sendUpdateToWear();
                     }
                 });
             }

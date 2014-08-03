@@ -3,11 +3,13 @@ package lv.bestan.android.wear.expensestracker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.wearable.MessageApi;
@@ -15,6 +17,7 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.util.List;
 
+import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewExpenseWearActivity extends Activity {
@@ -53,6 +56,12 @@ public class NewExpenseWearActivity extends Activity {
         } else {
             setContentView(R.layout.activity_new_expense_wear);
             mTitle = (TextView) findViewById(R.id.title);
+            ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container);
+
+            SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
+            double amount = Double.valueOf(prefs.getString("amount", "0.00"));
+            double budget = Double.valueOf(prefs.getString("budget", "500"));
+            BackgroundHelper.updateBackground(viewGroup, amount, budget);
             new CountDownTimer(3000, 1000) {
 
                 public void onTick(long millisUntilFinished) {

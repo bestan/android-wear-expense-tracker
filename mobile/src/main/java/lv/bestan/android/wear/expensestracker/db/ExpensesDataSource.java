@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import lv.bestan.android.wear.expensestracker.models.Budget;
 import lv.bestan.android.wear.expensestracker.models.Expense;
 
 /**
@@ -178,7 +179,10 @@ public class ExpensesDataSource {
                     for (Expense expense : expenses) {
                         totalAmount += expense.getAmount();
                     }
-                    byte[] data = String.valueOf(totalAmount).getBytes("UTF-8");
+
+                    double budget = Budget.getAmount(context);
+                    String dataString = String.valueOf(totalAmount) + ":" + budget;
+                    byte[] data = dataString.getBytes("UTF-8");
                     for (String node : getNodes(googleApiClient)) {
                         MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
                                 googleApiClient, node, "/expense", data).await();

@@ -22,12 +22,14 @@ public class DataLayerWearListenerService extends WearableListenerService {
     public void onMessageReceived(MessageEvent messageEvent) {
         try {
             byte[] data = messageEvent.getData();
-            String text = new String(data, "UTF-8");
-            Double amount = Double.valueOf(text);
+            String[] text = new String(data, "UTF-8").split(":");
+            Double amount = Double.valueOf(text[0]);
+            Double budget = Double.valueOf(text[1]);
             Log.d(TAG, "Expense: :" + amount);
 
             SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
             prefs.edit().putString("amount", String.valueOf(amount)).commit();
+            prefs.edit().putString("budget", String.valueOf(budget)).commit();
 
             Intent intent = new Intent("expenses_update");
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
