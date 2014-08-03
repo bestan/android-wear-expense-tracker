@@ -1,6 +1,7 @@
 package lv.bestan.android.wear.expensestracker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,6 +15,8 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.util.List;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class NewExpenseWearActivity extends Activity {
 
     private static final String TAG = "NewExpenseWearActivity";
@@ -23,6 +26,11 @@ public class NewExpenseWearActivity extends Activity {
 
 
     private int onResumeCount;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
 
     @Override
     protected void onResume() {

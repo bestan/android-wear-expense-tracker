@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wear_background">
+    android:background="#298f38">
 
     <TextView
         android:id="@+id/amount_text"
         android:layout_width="match_parent"
-        android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:gravity="center"
         android:fontFamily="sans-serif-light"
+        android:gravity="center"
         android:text="Expenses"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/amount"
         android:layout_width="match_parent"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#FFFFFF"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/amount_text"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="0.00"
+        android:textColor="#FFFFFF"
         android:textSize="50sp"/>
 
     <Button
         android:id="@+id/button_add_expense"
         android:layout_width="120dp"
-        android:layout_height="40dp"
+        android:layout_height="36dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/add_expense"
         android:fontFamily="sans-serif-light"
-        android:background="@drawable/button_background_small"
+        android:textSize="18sp"
         android:padding="5dp"
-        android:text="@string/new_expense"/>
+        android:text="@string/add_expense"/>
 
 </RelativeLayout>

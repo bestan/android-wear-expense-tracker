@@ -11,6 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.wearable.MessageApi;
@@ -19,9 +20,13 @@ import com.google.android.gms.wearable.Wearable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class MainWearActivity extends Activity {
 
     private static final String TAG = "MyWearActivity";
+    private RelativeLayout mContainer;
     private TextView mAmount;
     private TextView mAmountText;
     private Button mAddExpense;
@@ -35,9 +40,15 @@ public class MainWearActivity extends Activity {
     };
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_wear);
+        mContainer = (RelativeLayout) findViewById(R.id.container);
         mAmount = (TextView) findViewById(R.id.amount);
         mAmountText = (TextView) findViewById(R.id.amount_text);
         mAddExpense = (Button) findViewById(R.id.button_add_expense);
@@ -107,5 +118,8 @@ public class MainWearActivity extends Activity {
 
         if (mAmount != null)
             mAmount.setText(String.format("%.2f", amount));
+
+        float budget = prefs.getFloat("budget", 500);
+        BackgroundHelper.updateBackground(mContainer, amount, budget);
     }
 }

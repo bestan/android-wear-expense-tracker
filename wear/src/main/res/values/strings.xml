@@ -3,6 +3,6 @@
 
     <string name="app_name">Expenses</string>
     <string name="title_activity_new_expense_wear">New expense</string>
-    <string name="new_expense">New</string>
+    <string name="add_expense">ADD EXPENSE</string>
 
 </resources>
