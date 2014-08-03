@@ -8,7 +8,7 @@
     </style>
 
     <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">#84a63d</item>
+        <item name="android:background">#298f38</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleStyle</item>
     </style>
 

@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_small_green"
+        android:icon="@drawable/test_logo_watch"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity
