@@ -19,6 +19,8 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
+import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -116,8 +118,10 @@ public class MainWearActivity extends Activity {
         SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
         double amount = Double.valueOf(prefs.getString("amount", "0.00"));
 
-        if (mAmount != null)
-            mAmount.setText(String.format("%.2f", amount));
+        if (mAmount != null) {
+            Currency currency = Currency.getInstance(Locale.getDefault());
+            mAmount.setText(currency.getSymbol() + String.format("%.2f", amount));
+        }
 
         float budget = prefs.getFloat("budget", 500);
         BackgroundHelper.updateBackground(mContainer, amount, budget);

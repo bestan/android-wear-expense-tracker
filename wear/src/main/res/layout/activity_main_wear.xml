@@ -2,9 +2,11 @@
 <RelativeLayout
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#298f38">
+    android:background="#298f38"
+    tools:ignore="MissingPrefix">
 
     <TextView
         android:id="@+id/title"
@@ -19,6 +21,7 @@
 
     <TextView
         android:id="@+id/amount"
+        fontPath="Campton.Bold.otf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
@@ -32,8 +35,8 @@
         android:id="@+id/month"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/amount"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/month"
         android:textColor="#FFFFFF"
@@ -48,8 +51,8 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/add_expense"
         android:fontFamily="sans-serif-light"
-        android:textSize="18sp"
         android:padding="5dp"
-        android:text="@string/add_expense"/>
+        android:text="@string/add_expense"
+        android:textSize="18sp"/>
 
 </RelativeLayout>
