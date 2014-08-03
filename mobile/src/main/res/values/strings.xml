@@ -15,9 +15,10 @@
     <string name="title_spent">You’ve spent\na total of</string>
     <string name="month">this %s</string>
     <string name="budget">out of your %s budget"</string>
-    <string name="add_expense">Add expense</string>
-    <string name="history">History</string>
+    <string name="add_expense">ADD EXPENSE</string>
+    <string name="history">HISTORY</string>
 
     <!-- New Expense screen -->
-    <string name="done">Done</string>
+    <string name="done">DONE</string>
+    <string name="new_expense">NEW EXPENSE</string>
 </resources>
