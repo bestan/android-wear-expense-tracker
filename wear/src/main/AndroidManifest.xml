@@ -26,6 +26,9 @@
         <activity
             android:name="lv.bestan.android.wear.expensestracker.NewExpenseWearActivity"/>
 
+        <activity
+            android:name="lv.bestan.android.wear.expensestracker.NumberPadActivity"/>
+
         <service android:name="lv.bestan.android.wear.expensestracker.DataLayerWearListenerService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>

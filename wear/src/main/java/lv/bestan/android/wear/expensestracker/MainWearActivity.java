@@ -59,7 +59,8 @@ public class MainWearActivity extends Activity {
         mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewExpenseWearActivity(true);
+//                openNewExpenseWearActivity(true);
+                openNumberPadActivity();
             }
         });
 
@@ -86,6 +87,11 @@ public class MainWearActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private void openNumberPadActivity() {
+        Intent intent = new Intent(this, NumberPadActivity.class);
+        startActivity(intent);
     }
 
     private void openNewExpenseWearActivity(boolean skipSplash) {

@@ -90,7 +90,7 @@ public class NewExpenseWearActivity extends Activity {
         for (String word : spokenText.split(" ")) {
             try {
                 Double amount = Double.valueOf(word);
-                sendExpense(amount);
+                WearUtils.getInstance(this).sendExpense(amount);
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,40 +106,6 @@ public class NewExpenseWearActivity extends Activity {
             analyseSpokenText(results.get(0));
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void sendExpense(final double expense) {
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    byte[] data = String.valueOf(expense).getBytes("UTF-8");
-                    WearUtils wearUtils = WearUtils.getInstance(NewExpenseWearActivity.this);
-                    for (String node : wearUtils.getNodes()) {
-                        MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
-                                wearUtils.getGoogleApiClient(), node, DataLayerWearListenerService.NEW_EXPENSE_PATH, data).await();
-                        if (!result.getStatus().isSuccess()) {
-                            Log.e(TAG, "ERROR: failed to send Message: " + result.getStatus());
-                        } else {
-                            Log.d(TAG, "Successfully sent a Message");
-                        }
-
-                    }
-                    NewExpenseWearActivity.this.runOnUiThread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(NewExpenseWearActivity.this, ConfirmationActivity.class);
-                            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
-                            startActivity(intent);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
 }
