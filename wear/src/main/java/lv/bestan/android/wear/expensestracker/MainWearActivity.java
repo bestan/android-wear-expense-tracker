@@ -59,8 +59,8 @@ public class MainWearActivity extends Activity {
         mAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                openNewExpenseWearActivity(true);
-                openNumberPadActivity();
+                openNewExpenseWearActivity(true);
+//                openNumberPadActivity();
             }
         });
 

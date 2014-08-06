@@ -120,6 +120,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
         if (tag == ACTION_DONE) {
             double number = Double.valueOf((String) mNumber.getText());
             WearUtils.getInstance(this).sendExpense(number);
+            setResult(RESULT_OK);
             finish();
         }
 

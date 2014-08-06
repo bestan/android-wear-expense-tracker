@@ -9,13 +9,16 @@ import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -24,11 +27,9 @@ public class NewExpenseWearActivity extends Activity {
 
     private static final String TAG = "NewExpenseWearActivity";
     private static final int SPEECH_REQUEST_CODE = 0;
+    private static final int NUMBERPAD_REQUEST_CODE = 1;
 
     private TextView mTitle;
-
-
-    private int onResumeCount;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -38,17 +39,11 @@ public class NewExpenseWearActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        onResumeCount++;
-        if (onResumeCount >= 2) {
-            finish();
-        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        onResumeCount = 0;
 
         boolean skipSplash = getIntent().getExtras().getBoolean("SKIP_SPLASH");
         if (skipSplash) {
@@ -90,12 +85,36 @@ public class NewExpenseWearActivity extends Activity {
         for (String word : spokenText.split(" ")) {
             try {
                 Double amount = Double.valueOf(word);
-                WearUtils.getInstance(this).sendExpense(amount);
+                expenseConfirmation(amount);
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void expenseConfirmation(final double amount) {
+        setContentView(R.layout.activity_new_expense_confirm_wear);
+        Currency currency = Currency.getInstance(Locale.getDefault());
+
+        TextView amountTextView = (TextView) findViewById(R.id.amount);
+        amountTextView.setText(currency.getSymbol() + String.format("%.2f", amount));
+
+        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WearUtils.getInstance(NewExpenseWearActivity.this).sendExpense(amount);
+            }
+        });
+
+        findViewById(R.id.numberpad).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewExpenseWearActivity.this, NumberPadActivity.class);
+                startActivityForResult(intent, NUMBERPAD_REQUEST_CODE);
+            }
+        });
+
     }
 
     @Override
@@ -104,7 +123,10 @@ public class NewExpenseWearActivity extends Activity {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             analyseSpokenText(results.get(0));
+        } else if (requestCode == NUMBERPAD_REQUEST_CODE) {
+            finish();
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
