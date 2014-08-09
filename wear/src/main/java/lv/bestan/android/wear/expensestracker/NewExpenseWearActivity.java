@@ -30,6 +30,8 @@ public class NewExpenseWearActivity extends Activity {
     private static final int NUMBERPAD_REQUEST_CODE = 1;
 
     private TextView mTitle;
+    private boolean confirmingAmount = false;
+    private int onResumeCount;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -39,6 +41,10 @@ public class NewExpenseWearActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        onResumeCount++;
+        if (onResumeCount >= 2 && !confirmingAmount) {
+            finish();
+        }
     }
 
     @Override
@@ -54,9 +60,7 @@ public class NewExpenseWearActivity extends Activity {
             ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container);
 
             SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
-            double amount = Double.valueOf(prefs.getString("amount", "0.00"));
-            double budget = Double.valueOf(prefs.getString("budget", "500"));
-            BackgroundHelper.updateBackground(viewGroup, amount, budget);
+            BackgroundHelper.updateBackground(viewGroup);
             new CountDownTimer(3000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
@@ -68,6 +72,8 @@ public class NewExpenseWearActivity extends Activity {
                 }
             }.start();
         }
+
+        onResumeCount = 0;
 
     }
 
@@ -89,12 +95,15 @@ public class NewExpenseWearActivity extends Activity {
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
+                expenseConfirmation(0);
             }
         }
     }
 
     private void expenseConfirmation(final double amount) {
         setContentView(R.layout.activity_new_expense_confirm_wear);
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container);
+        BackgroundHelper.updateBackground(viewGroup);
         Currency currency = Currency.getInstance(Locale.getDefault());
 
         TextView amountTextView = (TextView) findViewById(R.id.amount);
@@ -104,6 +113,7 @@ public class NewExpenseWearActivity extends Activity {
             @Override
             public void onClick(View v) {
                 WearUtils.getInstance(NewExpenseWearActivity.this).sendExpense(amount);
+                finish();
             }
         });
 
@@ -123,7 +133,8 @@ public class NewExpenseWearActivity extends Activity {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             analyseSpokenText(results.get(0));
-        } else if (requestCode == NUMBERPAD_REQUEST_CODE) {
+            confirmingAmount = true;
+        } else if (requestCode == NUMBERPAD_REQUEST_CODE && resultCode == RESULT_OK) {
             finish();
         }
 

@@ -89,11 +89,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onResume() {
         super.onResume();
-
-        SharedPreferences prefs = this.getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
-        double amount = Double.valueOf(prefs.getString("amount", "0.00"));
-        double budget = Double.valueOf(prefs.getString("budget", "500"));
-        BackgroundHelper.updateBackground(mContainer, amount, budget);
+        BackgroundHelper.updateBackground(mContainer);
     }
 
     private TextView styleTextView(TextView textView) {
