@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     private TextView mNumber;
     private ImageView mDelete;
     private LinearLayout mContainer;
+    private LinearLayout mNumberPadContainer;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,6 +45,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_number_pad);
 
         mContainer = (LinearLayout) findViewById(R.id.container);
+        mNumberPadContainer = (LinearLayout) findViewById(R.id.numberpad_container);
         mNumber = (TextView) findViewById(R.id.number);
         mDelete = (ImageView) findViewById(R.id.delete);
 
@@ -57,9 +61,10 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
                 textView.setText("" + number);
                 textView.setTag(number);
                 styleTextView(textView);
+                setNumberPadRowParams(layout);
                 layout.addView(textView);
             }
-            mContainer.addView(layout);
+            mNumberPadContainer.addView(layout);
         }
 
         LinearLayout layout = new LinearLayout(this);
@@ -83,7 +88,13 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
         imageView.setLayoutParams(params);
         layout.addView(imageView);
 
-        mContainer.addView(layout);
+        setNumberPadRowParams(layout);
+        mNumberPadContainer.addView(layout);
+    }
+
+    private void setNumberPadRowParams(LinearLayout layout) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        layout.setLayoutParams(params);
     }
 
     @Override

@@ -20,9 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textColor="#FFFFFF"
-            android:maxLines="1"
             android:layout_toLeftOf="@+id/delete"
+            android:maxLines="1"
+            android:textColor="#FFFFFF"
             android:textSize="40sp"/>
 
         <ImageView
@@ -30,10 +30,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/button_delete"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:src="@drawable/button_delete"/>
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/numberpad_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
 
 </LinearLayout>
