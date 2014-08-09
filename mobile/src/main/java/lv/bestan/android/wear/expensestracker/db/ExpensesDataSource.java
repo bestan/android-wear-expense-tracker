@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import lv.bestan.android.wear.expensestracker.ExpensesApplication;
 import lv.bestan.android.wear.expensestracker.models.Budget;
 import lv.bestan.android.wear.expensestracker.models.Expense;
 
@@ -81,6 +82,8 @@ public class ExpensesDataSource {
         Intent intent = new Intent("add_expense_event");
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         sendUpdateToWear();
+
+        ExpensesApplication.getInstance().sendNewExpenseEvent(""+expense.getAmount());
 
         return updatedExpense;
     }

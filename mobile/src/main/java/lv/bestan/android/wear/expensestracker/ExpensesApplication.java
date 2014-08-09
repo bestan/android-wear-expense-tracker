@@ -39,6 +39,16 @@ public class ExpensesApplication extends Application {
         t.send(new HitBuilders.AppViewBuilder().build());
     }
 
+    public void sendNewExpenseEvent(String value) {
+        Tracker t = getTracker(ExpensesApplication.TrackerName.APP_TRACKER);
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory("Expense")
+                .setAction("New")
+                .setLabel(value)
+                .build());
+    }
+
+
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
     synchronized Tracker getTracker(TrackerName trackerId) {
         if (!mTrackers.containsKey(trackerId)) {
