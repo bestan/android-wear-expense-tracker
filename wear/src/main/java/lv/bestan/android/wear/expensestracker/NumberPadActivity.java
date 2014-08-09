@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     private static final int ACTION_DONE = -3;
 
     private TextView mNumber;
-    private TextView mDelete;
+    private ImageView mDelete;
     private LinearLayout mContainer;
 
     @Override
@@ -41,7 +43,7 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
 
         mContainer = (LinearLayout) findViewById(R.id.container);
         mNumber = (TextView) findViewById(R.id.number);
-        mDelete = (TextView) findViewById(R.id.delete);
+        mDelete = (ImageView) findViewById(R.id.delete);
 
         mDelete.setOnClickListener(this);
         mDelete.setTag(ACTION_DELETE);
@@ -72,10 +74,14 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
         textView.setTag(0);
         layout.addView(styleTextView(textView));
 
-        textView = new TextView(this);
-        textView.setText("D");
-        textView.setTag(ACTION_DONE);
-        layout.addView(styleTextView(textView));
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.button_accept);
+        imageView.setTag(ACTION_DONE);
+        imageView.setOnClickListener(this);
+        imageView.setPadding(10, 10, 10, 10);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        imageView.setLayoutParams(params);
+        layout.addView(imageView);
 
         mContainer.addView(layout);
     }
@@ -93,10 +99,11 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     private TextView styleTextView(TextView textView) {
         textView.setTextColor(Color.parseColor("#FFFFFF"));
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(30);
+        textView.setTextSize(25);
         textView.setOnClickListener(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         textView.setLayoutParams(params);
+        textView.setPadding(0, 5, 0, 5);
         return textView;
     }
 
@@ -114,7 +121,9 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
         }
 
         if (tag == ACTION_DELETE) {
-            mNumber.setText(numberText.substring(0, numberText.length() -1));
+            if (!TextUtils.isEmpty(numberText)) {
+                mNumber.setText(numberText.substring(0, numberText.length() - 1));
+            }
         }
 
         if (tag == ACTION_DONE) {

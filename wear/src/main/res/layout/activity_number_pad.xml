@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#298f38"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,19 +16,23 @@
 
         <TextView
             android:id="@+id/number"
-            android:layout_width="wrap_content"
+            fontPath="Campton.Bold.otf"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginLeft="10dp"
+            android:textColor="#FFFFFF"
+            android:maxLines="1"
+            android:layout_toLeftOf="@+id/delete"
+            android:textSize="40sp"/>
 
-        <TextView
+        <ImageView
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textSize="30sp"
-            android:text="X"
-            android:textColor="#FFFFFF"/>
+            android:src="@drawable/button_delete"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"/>
 
     </RelativeLayout>
 
