@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,7 +31,8 @@ public class MainWearActivity extends Activity {
     private RelativeLayout mContainer;
     private TextView mAmount;
     private TextView mMonth;
-    private Button mAddExpense;
+    private ImageView mVoice;
+    private ImageView mNumberpad;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -53,14 +54,21 @@ public class MainWearActivity extends Activity {
         mContainer = (RelativeLayout) findViewById(R.id.container);
         mAmount = (TextView) findViewById(R.id.amount);
         mMonth = (TextView) findViewById(R.id.month);
-        mAddExpense = (Button) findViewById(R.id.button_add_expense);
+        mVoice = (ImageView) findViewById(R.id.voice);
+        mNumberpad = (ImageView) findViewById(R.id.numberpad);
 
 
-        mAddExpense.setOnClickListener(new View.OnClickListener() {
+        mVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewExpenseWearActivity(true);
-//                openNumberPadActivity();
+            }
+        });
+
+        mNumberpad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNumberPadActivity();
             }
         });
 

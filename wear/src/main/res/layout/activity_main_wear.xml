@@ -43,17 +43,32 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/button_add_expense"
-        android:layout_width="120dp"
-        android:layout_height="36dp"
+    <View
+        android:id="@+id/center"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/center"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/add_expense"
-        android:fontFamily="sans-serif-light"
-        android:padding="5dp"
-        android:text="@string/add_expense"
-        android:textSize="18sp"/>
+        android:layout_marginRight="10dp"
+        android:paddingLeft="15dp"
+        android:src="@drawable/button_mic"/>
+
+    <ImageView
+        android:id="@+id/numberpad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:paddingRight="15dp"
+        android:src="@drawable/button_keypad"/>
 
 </RelativeLayout>
