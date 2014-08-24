@@ -50,6 +50,8 @@ public class ExpensesDataSource {
             MySQLiteHelper.COLUMN_TIME
     };
 
+    private int opens = 0;
+    private Object lock = new Object();
 
     public ExpensesDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -57,11 +59,23 @@ public class ExpensesDataSource {
     }
 
     public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
+        synchronized (lock) {
+            if (opens == 0) {
+                database = dbHelper.getWritableDatabase();
+            }
+            opens++;
+            Log.d(TAG, "opened: " + opens);
+        }
     }
 
     public void close() {
-        dbHelper.close();
+        synchronized (lock) {
+            opens--;
+            if (opens == 0) {
+                dbHelper.close();
+            }
+            Log.d(TAG, "closed: " + opens);
+        }
     }
 
     public Expense saveExpense(Expense expense) {
