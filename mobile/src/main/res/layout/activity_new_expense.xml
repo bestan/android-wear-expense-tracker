@@ -20,8 +20,8 @@
 
     <TextView
         android:id="@+id/amount"
-        fontPath="campton_bold.otf"
         android:layout_width="wrap_content"
+        fontPath="Campton.Bold.otf"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_marginTop="30dp"
