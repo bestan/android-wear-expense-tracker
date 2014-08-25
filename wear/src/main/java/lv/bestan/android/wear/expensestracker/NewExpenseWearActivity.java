@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import lv.bestan.android.wear.expensestracker.utils.CurrencyUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewExpenseWearActivity extends Activity {
@@ -104,10 +105,9 @@ public class NewExpenseWearActivity extends Activity {
         setContentView(R.layout.activity_new_expense_confirm_wear);
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.container);
         BackgroundHelper.updateBackground(viewGroup);
-        Currency currency = Currency.getInstance(Locale.getDefault());
 
         TextView amountTextView = (TextView) findViewById(R.id.amount);
-        amountTextView.setText(currency.getSymbol() + String.format("%.2f", amount));
+        amountTextView.setText(CurrencyUtils.getCurrencySymbol() + String.format("%.2f", amount));
 
         findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override

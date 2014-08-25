@@ -22,6 +22,7 @@ import java.util.Locale;
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import lv.bestan.android.wear.expensestracker.utils.CurrencyUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class NewExpenseActivity extends FragmentActivity {
@@ -99,8 +100,7 @@ public class NewExpenseActivity extends FragmentActivity {
     }
 
     private void updateFields() {
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        mAmount.setText(currency.getSymbol() + String.format("%.2f", amount));
+        mAmount.setText(CurrencyUtils.getCurrencySymbol() + String.format("%.2f", amount));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
         mTime.setText(dateFormat.format(time.getTime()));

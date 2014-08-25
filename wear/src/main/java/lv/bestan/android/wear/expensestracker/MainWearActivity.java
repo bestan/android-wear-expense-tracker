@@ -23,6 +23,7 @@ import java.util.Currency;
 import java.util.Locale;
 
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import lv.bestan.android.wear.expensestracker.utils.CurrencyUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainWearActivity extends Activity {
@@ -133,8 +134,7 @@ public class MainWearActivity extends Activity {
         double amount = Double.valueOf(prefs.getString("amount", "0.00"));
 
         if (mAmount != null) {
-            Currency currency = Currency.getInstance(Locale.getDefault());
-            mAmount.setText(currency.getSymbol() + String.format("%.2f", amount));
+            mAmount.setText(CurrencyUtils.getCurrencySymbol() + String.format("%.2f", amount));
         }
 
         double budget = Double.valueOf(prefs.getString("budget", "500"));

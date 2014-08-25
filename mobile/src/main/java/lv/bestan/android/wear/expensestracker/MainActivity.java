@@ -27,6 +27,7 @@ import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Budget;
 import lv.bestan.android.wear.expensestracker.models.Expense;
 import lv.bestan.android.wear.expensestracker.utils.BackgroundHelper;
+import lv.bestan.android.wear.expensestracker.utils.CurrencyUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -133,11 +134,10 @@ public class MainActivity extends ActionBarActivity {
             total_amount += expense.getAmount();
         }
 
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        mAmount.setText(currency.getSymbol() + String.format("%.2f", total_amount));
+        mAmount.setText(CurrencyUtils.getCurrencySymbol() + String.format("%.2f", total_amount));
 
         double budget = Budget.getAmount(this);
-        mBudget.setText(String.format(getString(R.string.budget), currency.getSymbol() + String.format("%.2f", budget)));
+        mBudget.setText(String.format(getString(R.string.budget), CurrencyUtils.getCurrencySymbol() + String.format("%.2f", budget)));
 
         BackgroundHelper.updateBackground(mContainer, total_amount, budget);
     }
