@@ -12,10 +12,12 @@ public class BackgroundHelper {
 
 
     public static void updateBackground(ViewGroup viewGroup) {
-        SharedPreferences prefs = viewGroup.getContext().getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
-        double amount = Double.valueOf(prefs.getString("amount", "0.00"));
-        double budget = Double.valueOf(prefs.getString("budget", "500"));
-        updateBackground(viewGroup, amount, budget);
+        if (viewGroup != null) {
+            SharedPreferences prefs = viewGroup.getContext().getSharedPreferences("android_wear_expenses", Context.MODE_PRIVATE);
+            double amount = Double.valueOf(prefs.getString("amount", "0.00"));
+            double budget = Double.valueOf(prefs.getString("budget", "500"));
+            updateBackground(viewGroup, amount, budget);
+        }
     }
 
     public static void updateBackground(ViewGroup viewGroup, double amount, double budget) {

@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.wearable.view.WatchViewStub;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,10 +32,12 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     private static final int ACTION_DOT = -2;
     private static final int ACTION_DONE = -3;
 
+    private WatchViewStub stub;
     private TextView mNumber;
     private ImageView mDelete;
     private LinearLayout mContainer;
     private LinearLayout mNumberPadContainer;
+    private boolean isRound = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,12 +47,36 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_number_pad);
 
+        Log.d("test", "build: " + Build.DEVICE + " : " + Build.MODEL);
+
+        if (Build.MODEL.contains("360")) {
+            isRound = true;
+            setContentView(R.layout.layout_number_pad_round);
+        } else {
+            setContentView(R.layout.layout_number_pad_square);
+        }
+
+        initUI();
+
+    }
+
+    private void initUI() {
         mContainer = (LinearLayout) findViewById(R.id.container);
         mNumberPadContainer = (LinearLayout) findViewById(R.id.numberpad_container);
         mNumber = (TextView) findViewById(R.id.number);
         mDelete = (ImageView) findViewById(R.id.delete);
+
+        mContainer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
+                Log.d("test", "isRound: " + windowInsets.isRound());
+                if (windowInsets.isRound()) {
+
+                }
+                return windowInsets;
+            }
+        });
 
         mDelete.setOnClickListener(this);
         mDelete.setTag(ACTION_DELETE);
@@ -106,11 +135,17 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     private TextView styleTextView(TextView textView) {
         textView.setTextColor(Color.parseColor("#FFFFFF"));
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(25);
+        if (isRound) {
+            textView.setTextSize(18);
+            textView.setPadding(0, 3, 0, 3);
+        } else {
+            textView.setTextSize(25);
+            textView.setPadding(0, 5, 0, 5);
+        }
         textView.setOnClickListener(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         textView.setLayoutParams(params);
-        textView.setPadding(0, 5, 0, 5);
+
         return textView;
     }
 
