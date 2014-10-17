@@ -12,6 +12,7 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -69,6 +70,41 @@ public class WearUtils {
                             Log.e(TAG, "ERROR: failed to send Message: " + result.getStatus());
                         } else {
                             Log.d(TAG, "Successfully sent a Message");
+                        }
+
+                    }
+                    ((Activity) mContext).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(mContext, ConfirmationActivity.class);
+                            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
+                            mContext.startActivity(intent);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void sendCrash(final String dataString) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    byte[] data = String.valueOf(dataString).getBytes("UTF-8");
+                    for (String node : getNodes()) {
+                        MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
+                                getGoogleApiClient(), node, DataLayerWearListenerService.CRASH_PATH, data).await();
+                        if (!result.getStatus().isSuccess()) {
+                            Log.e(TAG, "ERROR: failed to send Message: " + result.getStatus());
+                        } else {
+                            Log.d(TAG, "Successfully sent a Message");
+                            File file = new File(mContext.getFilesDir() + "/crash.data");
+                            file.delete();
                         }
 
                     }

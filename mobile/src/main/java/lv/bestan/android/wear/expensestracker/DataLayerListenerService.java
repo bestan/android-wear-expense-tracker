@@ -7,6 +7,7 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
+import lv.bestan.android.wear.expensestracker.utils.EmailUtils;
 
 /**
  * Created by Stan on 07/07/2014.
@@ -16,6 +17,8 @@ public class DataLayerListenerService extends WearableListenerService {
     private static final String TAG = "DataLayerSample";
     public static final String NEW_EXPENSE_PATH = "/new_expense";
     public static final String REQUEST_EXPENSES_UPDATE_PATH = "/request_expenses_update";
+
+    public static final String CRASH_PATH = "/crash_path";
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
@@ -34,6 +37,18 @@ public class DataLayerListenerService extends WearableListenerService {
             }
         } else if (messageEvent.getPath().equals(REQUEST_EXPENSES_UPDATE_PATH)) {
             ExpensesDataSource.getInstance(this).sendUpdateToWear();
+        } else if (messageEvent.getPath().equals(CRASH_PATH)) {
+            try {
+                byte[] data = messageEvent.getData();
+                String text = new String(data, "UTF-8");
+                Log.d("test", text);
+
+                EmailUtils.sendEmail(text);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

@@ -18,6 +18,8 @@ public class DataLayerWearListenerService extends WearableListenerService {
     public static final String NEW_EXPENSE_PATH = "/new_expense";
     public static final String REQUEST_EXPENSES_UPDATE_PATH = "/request_expenses_update";
 
+    public static final String CRASH_PATH = "/crash_path";
+
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         try {
