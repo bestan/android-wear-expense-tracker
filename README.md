@@ -1,5 +1,7 @@
 Wear Expenses
 ============================
+![Wear Expenses](https://lh5.ggpht.com/JYa_hsJZgG14NoYH-dJQPTyxYXQUuv5C-vBKLICfgfZYtIZ31NVjhw_nay1RflfgwQ=h900-rw)
+
 Wear Expenses is an Android Wear app that allows you to track all your expenses using either voice and number pad on your Android Wear or easy-to-use interface on your phone. Use your watch to quickly find out how much money you spent or open the app on your phone to view full history.
 
 More info: https://play.google.com/store/apps/details?id=lv.bestan.android.wear.expensestracker
