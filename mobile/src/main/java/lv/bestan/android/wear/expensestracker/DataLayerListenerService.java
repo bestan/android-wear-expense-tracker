@@ -7,7 +7,6 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import lv.bestan.android.wear.expensestracker.db.ExpensesDataSource;
 import lv.bestan.android.wear.expensestracker.models.Expense;
-import lv.bestan.android.wear.expensestracker.utils.EmailUtils;
 
 /**
  * Created by Stan on 07/07/2014.
@@ -43,7 +42,7 @@ public class DataLayerListenerService extends WearableListenerService {
                 String text = new String(data, "UTF-8");
                 Log.d("test", text);
 
-                EmailUtils.sendEmail(text);
+                //TODO store exceptions (used to send them by email)
 
             } catch (Exception e) {
                 e.printStackTrace();
