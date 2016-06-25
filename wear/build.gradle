@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '20.0.0'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "lv.bestan.android.wear.expensestracker"
         minSdkVersion 20
-        targetSdkVersion 20
+        targetSdkVersion 23
         versionCode 10
         versionName "0.3.6"
     }
@@ -23,6 +23,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.support:wearable:+'
-    compile 'com.google.android.gms:play-services-wearable:+'
-    compile 'uk.co.chrisjenx:calligraphy:1.1.+'
+    compile 'com.google.android.gms:play-services-wearable:9.0.2'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }
