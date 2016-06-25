@@ -48,35 +48,24 @@ public class NumberPadActivity extends Activity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("test", "build: " + Build.DEVICE + " : " + Build.MODEL);
-
-        if (Build.MODEL.contains("360")) {
-            isRound = true;
-            setContentView(R.layout.layout_number_pad_round);
-        } else {
-            setContentView(R.layout.layout_number_pad_square);
-        }
-
-        initUI();
+        setContentView(R.layout.activity_number_pad);
+        stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+            @Override
+            public void onLayoutInflated(WatchViewStub watchViewStub) {
+                initUI();
+            }
+         });
 
     }
 
     private void initUI() {
+        isRound = findViewById(R.id.round_detection) != null;
+
         mContainer = (LinearLayout) findViewById(R.id.container);
         mNumberPadContainer = (LinearLayout) findViewById(R.id.numberpad_container);
         mNumber = (TextView) findViewById(R.id.number);
         mDelete = (ImageView) findViewById(R.id.delete);
-
-        mContainer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
-                Log.d("test", "isRound: " + windowInsets.isRound());
-                if (windowInsets.isRound()) {
-
-                }
-                return windowInsets;
-            }
-        });
 
         mDelete.setOnClickListener(this);
         mDelete.setTag(ACTION_DELETE);

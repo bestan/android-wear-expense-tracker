@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,21 +6,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#298f38"
-    android:orientation="vertical"
     tools:ignore="MissingPrefix">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="@string/title_spent"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/amount"
         fontPath="Campton.Bold.otf"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxLines="1"
         android:text="0.00"
         android:textColor="#FFFFFF"
-        android:textSize="50sp"/>
+        android:textSize="40sp"/>
 
+    <TextView
+        android:id="@+id/month"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amount"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/month"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
 
     <View
         android:id="@+id/center"
@@ -30,7 +50,7 @@
         android:layout_centerHorizontal="true"/>
 
     <ImageView
-        android:id="@+id/confirm"
+        android:id="@+id/voice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/center"
@@ -38,7 +58,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="10dp"
         android:paddingLeft="15dp"
-        android:src="@drawable/button_accept"/>
+        android:src="@drawable/button_mic"/>
 
     <ImageView
         android:id="@+id/numberpad"

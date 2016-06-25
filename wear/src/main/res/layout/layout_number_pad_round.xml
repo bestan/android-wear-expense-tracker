@@ -8,10 +8,7 @@
     android:layout_height="match_parent"
     android:background="#298f38"
     android:orientation="vertical"
-    android:paddingLeft="23dp"
-    android:paddingRight="23dp"
-    android:paddingTop="23dp"
-    android:paddingBottom="40dp"
+    android:padding="30dp"
     tools:ignore="MissingPrefix">
 
     <RelativeLayout
@@ -45,5 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"/>
+
+    <View
+        android:id="@+id/round_detection"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"/>
 
 </LinearLayout>
